@@ -1,0 +1,56 @@
+
+.introduction{
+    font-size: 1.5rem;
+}
+
+.container{
+    font-size: 1.25rem;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.form{
+    width: 700px;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    border-radius:.5rem;
+    box-shadow:4px 4px 8px 0px rgba( 0, 0, 0, 0.2 );
+    background-color: #e5e5f7;
+    background:
+    linear-gradient(135deg, #ECEDDC 25%, transparent 25%) -50px 0,
+    linear-gradient(225deg, #ECEDDC 25%, transparent 25%) -50px 0,
+    linear-gradient(315deg, #ECEDDC 25%, transparent 25%),
+    linear-gradient(45deg, #ECEDDC 25%, transparent 25%);
+    background-size: 100px 100px;
+    background-color: brown;
+}
+
+.container input{
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.container .submit-btn{
+    font-size: 1.25rem;
+    border:0;
+    background-color: #fd4339;
+    padding: 0.5rem 1rem;
+    width: 30%;
+    transform:translateZ(0);
+    transition:transform 0.25s ease-out;
+    transition: opacity .15s ease-in;
+}
+
+.submit-btn:hover{
+    transform: scale(1.05);
+}
+
+.submit-btn:active{
+    opacity: .8; transition: opacity .15s ease-out;
+}
