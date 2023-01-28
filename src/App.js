@@ -12,7 +12,7 @@ import Register from './components/Register/Register';
 const initialState = {
   input: '',
   imageURL: '',
-  box: {},
+  boxes: [],
   route: 'signin',
   isSignedIn: false,
   user: {
@@ -31,7 +31,7 @@ class App extends Component {
     this.state = {
       input: '',
       imageURL: '',
-      box: {},
+      boxes: [],
       route: 'signin',
       isSignedIn: false,
       user: {
@@ -56,8 +56,8 @@ class App extends Component {
     })
   }
 
-  calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+  calculateFaceLocation = (region) => {
+    const clarifaiFace = region.region_info.bounding_box;
     const image = document.getElementById('inputeImage');
     const width = Number(image.width);
     const height = Number(image.height);
@@ -71,7 +71,7 @@ class App extends Component {
   }
 
   displayFaceBox = (box) => {
-    this.setState({ box: box });
+    this.state.boxes.push(box);
   }
 
   onInputChange = (event) => {
@@ -80,6 +80,7 @@ class App extends Component {
 
   onPictureSubmit = () => {
     this.setState({ imageURL: this.state.input })
+    this.setState({ boxes: [] });
     fetch('https://magic-eye-api.onrender.com/imageurl', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -103,7 +104,11 @@ class App extends Component {
             })
             .catch(console.log)
         }
-        this.displayFaceBox(this.calculateFaceLocation(response))
+        const regions = response.outputs[0].data.regions;
+       regions.forEach(region => { 
+         //console.log(region)
+         this.displayFaceBox(this.calculateFaceLocation(region))
+        });
       })
       .catch(error => console.error(error));
   }
@@ -131,7 +136,8 @@ class App extends Component {
               onInputChange={this.onInputChange}
               onPictureSubmit={this.onPictureSubmit}
             />
-            <FaceRecognition box={this.state.box} imageURL={this.state.imageURL} />
+            <FaceRecognition boxes={this.state.boxes} imageURL={this.state.imageURL} />
+
           </React.Fragment>
           : (this.state.route === 'signin') ?
             <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
